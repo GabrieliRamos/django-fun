@@ -2,22 +2,41 @@
 
 ***** RESPOSTA *****
 
+Busca pelo id:
+
 >>> Article.objects.filter(reporter_id=1) 
 <QuerySet [<Article: Django lets you build Web apps easily>, <Article: NASA uses Python>]>
 
+Busca pelo nome:
 
+>>> Article.objects.filter(reporter__first_name='Larissa')
+<QuerySet [<Article: Azul>, <Article: Projota é um dos participantes>]>
 
--> todos os artigos entre 2019/2020
+_______________________________________________________________
+
+-> todos os artigos entre 2019/2020 --> 2020/2021
 
 ***** RESPOSTA *****
 
+>>> Article.objects.filter(pub_date__year__range=[2020,2021])  
+<QuerySet [<Article: Azul>, <Article: Django lets you build Web apps easily>, <Article: NASA uses Python>, <Article: Projota é um dos participantes>]>
 
--> artigos que contenha a palavra Python e tenha sido publicado por determinado reporter em abril de 2015
+_______________________________________________________________
+
+-> O reporter com mais artigos em 2021
 
 ***** RESPOSTA *****
 
->>> Article.objects.filter(headline__contains='Python', pub_date__year=2020, reporter__first_name='Zé') 
+_______________________________________________________________
+
+-> artigos que contenha a palavra Python e tenha sido publicado por determinado reporter em abril de 2015 --> em agosto de 2020
+
+***** RESPOSTA *****
+
+>>> Article.objects.filter(headline__contains='Python', pub_date__year=2020, pub_date__month='08', reporter__first_name='Zé')
 <QuerySet [<Article: NASA uses Python>]>
+
+_______________________________________________________________
 
 -> a quantidade de publicações que tenham a letra 'i'
 
@@ -26,4 +45,11 @@
 >>> Publication.objects.filter(title__contains="i").count()
 5
 
+_______________________________________________________________
+
 -> A média de publicações por artigo
+
+****** RESPOSTA *****
+
+>>> Publication.objects.count()/Article.objects.count()
+3.0
